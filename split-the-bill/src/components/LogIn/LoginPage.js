@@ -1,71 +1,67 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Input } from "reactstrap";
 import "./Login.css";
 
 class LoginPage extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      errors: {}
     };
   }
 
-  handleInputChange = event => {
-    event.preventDefault();
-    const { value, name } = event.target;
-    this.setState({ [name]: value });
+  onChange = e => {
+    e.preventDefault();
+    this.setState({ [e.target.name]: e.target.value });
   };
 
-  //   onSubmit = (event) => {
-  //     event.preventDefault();
-  //     fetch('/api/auth/login', {
-
-  //       }
-  //     })
-  //     .then(res => {
-  //       if (res.status === 200) {
-  //         this.props.history.push('/');
-  //       } else {
-  //         const error = new Error(res.error);
-  //         throw error;
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //       alert('Error logging in please try again');
-  //     });
-  //   }
+  onSubmit = e => {
+    e.preventDefault();
+    const user = {
+      username: this.state.username,
+      password: this.state.password
+    };
+    console.log(user);
+  };
 
   render() {
     return (
-      <Form>
-        <h1>Please Login</h1>
-        <FormGroup>
-          <Input
-            type="text"
-            placeholder="Username"
-            name="username"
-            value={this.state.username}
-            onChange={this.handleInputChange}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={this.state.password}
-            onChange={this.handleInputChange}
-            required
-          />
-          <br />
-          <Button color="success" size="large" onSubmit={this.onSubmit}>
-            Log In
-          </Button>
-        </FormGroup>
-      </Form>
+      <div className="login">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 m-auto">
+              <h1 className="display-4 text-center">Log In</h1>
+              <p className="lead text-center">
+                Sign into your Split the Bill account
+              </p>
+              <form onSubmit={this.onSubmit}>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.onChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.onChange}
+                    required
+                  />
+                </div>
+                <input type="submit" className="btn btn-info btn-block mt-4" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
