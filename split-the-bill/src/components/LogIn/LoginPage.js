@@ -31,13 +31,14 @@ class LoginPage extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Log In</h1>
+              <h2 className="display-4 text-center">Log In</h2>
               <p className="lead text-center">
                 Sign into your Split the Bill account
               </p>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
+                    className="form-control"
                     type="text"
                     placeholder="Username"
                     name="username"
@@ -48,6 +49,7 @@ class LoginPage extends Component {
                 </div>
                 <div className="form-group">
                   <input
+                    className="form-control"
                     type="password"
                     placeholder="Password"
                     name="password"
