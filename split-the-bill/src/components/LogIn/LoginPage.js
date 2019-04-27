@@ -7,6 +7,7 @@ class LoginPage extends Component {
     this.state = {
       username: "",
       password: "",
+      isLogginIn: false,
       errors: {}
     };
   }

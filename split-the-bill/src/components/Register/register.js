@@ -27,7 +27,8 @@ export default class Register extends React.Component {
         password: "",
         phone: "",
         email: "",
-        isRegistering: false
+        isRegistering: false,
+        errors: {}
       }
     };
   }
