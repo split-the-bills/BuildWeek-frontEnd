@@ -22,7 +22,7 @@ import {
     errorStatusCode: null,
     fetchingData: false,
     isLoggingIn: false,
-    userDashboard: []
+    UserDashboard: []
   };
   
   const reducer = (state = initialState, action) => {
@@ -79,7 +79,7 @@ import {
           ...state,
           error: "",
           fetchingData: false,
-          userDashboard: action.payload
+          UserDashboard: action.payload
         };
       case FETCH_DATA_FAILURE:
         return {

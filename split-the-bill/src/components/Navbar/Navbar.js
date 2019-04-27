@@ -25,6 +25,11 @@ export default class Navbar extends Component {
                   Login
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link to="/protected" className="nav-link">
+                  Protected Page
+                </Link>
+              </li>
             </ul>
           </div>
           <nav className="navbar navbar-dark bg-dark">
