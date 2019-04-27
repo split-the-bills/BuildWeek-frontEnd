@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./Login.css";
+import { connect } from "react-redux";
+import { login } from "../actions";
 
 class LoginPage extends Component {
   constructor() {
@@ -8,7 +10,7 @@ class LoginPage extends Component {
       username: "",
       password: "",
       isLogginIn: false,
-      errors: {}
+      errors: ""
     };
   }
 
@@ -69,4 +71,14 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+const mapStateToProps = state => {
+  return {
+    isLoggingIn: state.isLoggingIn,
+    errors: state.errors
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { login }
+)(LoginPage);

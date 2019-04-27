@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import { BrowserRouter as Link } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import {
@@ -13,11 +13,13 @@ import {
   // FormText
 } from "reactstrap";
 // import axios from "axios";
+import { connect } from "react-redux";
+import { registerUser } from "../actions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 
-export default class Register extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +30,7 @@ export default class Register extends React.Component {
         phone: "",
         email: "",
         isRegistering: false,
-        errors: {}
+        errors: ""
       }
     };
   }
@@ -136,3 +138,14 @@ export default class Register extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    isRegisterring: state.isRegistering,
+    errors: state.errors
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(Register);
