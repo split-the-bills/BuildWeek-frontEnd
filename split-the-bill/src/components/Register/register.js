@@ -12,7 +12,7 @@ import {
   Input
   // FormText
 } from "reactstrap";
-import axios from "axios";
+// import axios from "axios";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
@@ -33,47 +33,25 @@ export default class Register extends React.Component {
     };
   }
   /////////////////////////////////////////
-  componentDidMount() {
-    axios
-      .get("http://localhost:9090/api/auth/register")
-      .then(response => {
-        console.log(response.data);
-        this.setState({
-          registrationInfo: response.data
-        });
-      })
-      .catch(err => console.log(err));
-  }
-
-  handleRegistrationFormInput = event => {
-    const newUser = event.target.newUser;
-    this.setState({ [newUser]: event.target.value });
+  handleChange = e => {
+    this.setState({
+      registrationInfo: {
+        ...this.state.registrationInfo,
+        [e.target.name]: e.target.value
+      }
+    });
   };
 
-  // handleRegistration = e => {
-  //   e.preventDefault();
-  //   this.props
-  //     .login(this.state.registrationInfo)
-  //     .then(() => this.props.history.push("/protected"));
+  // handleRegistrationFormInput = event => {
+  //   const newUser = event.target.newUser;
+  //   this.setState({ [newUser]: event.target.value });
   // };
 
-  handleRegisterBtn = event => {
-    event.preventDefault();
-    axios
-      .post("http://localhost:9090/api/auth/register", {
-        id: this.state.id,
-        username: this.state.username,
-        password: this.state.password,
-        phone: this.state.phone,
-        email: this.state.email
-        // isRegistering: true
-      })
-      .then(response => {
-        this.setState({ registrationInfo: response.data.registrationInfo });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  handleRegistration = e => {
+    e.preventDefault();
+    this.props
+      .login(this.state.registrationInfo)
+      .then(() => this.props.history.push("/protected"));
   };
 
   render() {
@@ -94,7 +72,7 @@ export default class Register extends React.Component {
                 id="RegisterUsername"
                 placeholder="enter your username"
                 value={this.state.registrationInfo.username}
-                onChange={this.handleRegistrationFormInput}
+                onChange={this.handleChange}
               />
             </FormGroup>
           </Col>
@@ -107,7 +85,7 @@ export default class Register extends React.Component {
                 id="RegisterPassword"
                 placeholder="enter your password"
                 value={this.state.registrationInfo.password}
-                onChange={this.handleRegistrationFormInput}
+                onChange={this.handleChange}
               />
             </FormGroup>
           </Col>
@@ -120,7 +98,7 @@ export default class Register extends React.Component {
             id="RegisterEmail"
             placeholder="enter your email"
             value={this.state.registrationInfo.email}
-            onChange={this.handleRegistrationFormInput}
+            onChange={this.handleChange}
           />
         </FormGroup>
         <FormGroup>
@@ -131,7 +109,7 @@ export default class Register extends React.Component {
             id="RegisterPhoneNumber"
             placeholder="enter your phone number"
             value={this.state.registrationInfo.phone}
-            onChange={this.handleRegistrationFormInput}
+            onChange={this.handleChange}
           />
         </FormGroup>
 
@@ -143,10 +121,9 @@ export default class Register extends React.Component {
         </FormGroup>
         <Link to="/" className="home-route">
           <Button
-            className="register-btn"
-            handleRegisterBtn={this.handleRegisterBtn}
-            handleRegistrationFormInput={this.handleRegistrationFormInput}
-            // onSubmit={this.handleRegistration}
+            className="register-btn"            
+            onChange={this.handleChange}
+            onSubmit={this.handleRegistration}
           >
             {this.props.isRegistering ? (
               <Loader type="ThreeDots" color="#1f2a38" height="12" width="26" />
