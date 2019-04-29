@@ -6,7 +6,7 @@ import Register from "./components/Register/register";
 import Landing from "./components/Landing/Landing";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <div className="container">
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
-        <PrivateRoute exact path="/protected" component={UserDashboard} />
+        <Route exact path="/dashboard" component={Dashboard} />    
       </div>
       <Footer />
     </div>

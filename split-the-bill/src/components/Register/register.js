@@ -1,5 +1,5 @@
 import React from "react";
-// import ReactDOM from "react-dom";
+import ReactDOM from "react-dom";
 import { BrowserRouter as Link } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import {
@@ -12,14 +12,12 @@ import {
   Input
   // FormText
 } from "reactstrap";
-// import axios from "axios";
-import { connect } from "react-redux";
-import { registerUser } from "../actions";
+import axios from "axios";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles.css";
+// import "./styles.css";
 
-class Register extends React.Component {
+export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,31 +27,52 @@ class Register extends React.Component {
         password: "",
         phone: "",
         email: "",
-        isRegistering: false,
-        errors: ""
+        isRegistering: false
       }
     };
   }
   /////////////////////////////////////////
-  handleChange = e => {
-    this.setState({
-      registrationInfo: {
-        ...this.state.registrationInfo,
-        [e.target.name]: e.target.value
-      }
-    });
+  componentDidMount() {
+    axios
+      .get("http://localhost:9090/api/auth/register")
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          registrationInfo: response.data
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  handleRegistrationFormInput = event => {
+    const newUser = event.target.newUser;
+    this.setState({ [newUser]: event.target.value });
   };
 
-  // handleRegistrationFormInput = event => {
-  //   const newUser = event.target.newUser;
-  //   this.setState({ [newUser]: event.target.value });
+  // handleRegistration = e => {
+  //   e.preventDefault();
+  //   this.props
+  //     .login(this.state.registrationInfo)
+  //     .then(() => this.props.history.push("/protected"));
   // };
 
-  handleRegistration = e => {
-    e.preventDefault();
-    this.props
-      .login(this.state.registrationInfo)
-      .then(() => this.props.history.push("/protected"));
+  handleRegisterBtn = event => {
+    event.preventDefault();
+    axios
+      .post("http://localhost:9090/api/auth/register", {
+        id: this.state.id,
+        username: this.state.username,
+        password: this.state.password,
+        phone: this.state.phone,
+        email: this.state.email
+        // isRegistering: true
+      })
+      .then(response => {
+        this.setState({ registrationInfo: response.data.registrationInfo });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -69,12 +88,13 @@ class Register extends React.Component {
             <FormGroup>
               <Label for="RegisterEmail">Username</Label>
               <Input
-                type="username"
+                type="text"
                 name="user"
                 id="RegisterUsername"
                 placeholder="enter your username"
-                value={this.state.registrationInfo.username}
-                onChange={this.handleChange}
+                value={this.state.username}
+                onChange={this.handleRegistrationFormInput}
+                required
               />
             </FormGroup>
           </Col>
@@ -86,8 +106,9 @@ class Register extends React.Component {
                 name="password"
                 id="RegisterPassword"
                 placeholder="enter your password"
-                value={this.state.registrationInfo.password}
-                onChange={this.handleChange}
+                value={this.state.password}
+                onChange={this.handleRegistrationFormInput}
+                required
               />
             </FormGroup>
           </Col>
@@ -95,12 +116,13 @@ class Register extends React.Component {
         <FormGroup>
           <Label for="RegisterEmail">Email</Label>
           <Input
-            type="email"
+            type="text"
             name="email"
             id="RegisterEmail"
             placeholder="enter your email"
-            value={this.state.registrationInfo.email}
-            onChange={this.handleChange}
+            value={this.state.email}
+            onChange={this.handleRegistrationFormInput}
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -110,8 +132,9 @@ class Register extends React.Component {
             name="phonenumber"
             id="RegisterPhoneNumber"
             placeholder="enter your phone number"
-            value={this.state.registrationInfo.phone}
-            onChange={this.handleChange}
+            value={this.state.phone}
+            onChange={this.handleRegistrationFormInput}
+            required
           />
         </FormGroup>
 
@@ -121,11 +144,13 @@ class Register extends React.Component {
             Receive Email Promotions
           </Label>
         </FormGroup>
-        <Link to="/" className="home-route">
+        <Link to="/dashboard" className="home-route">
           <Button
-            className="register-btn"            
-            onChange={this.handleChange}
-            onSubmit={this.handleRegistration}
+            className="register-btn"
+            handleRegisterBtn={this.handleRegisterBtn}
+            handleRegistrationFormInput={this.handleRegistrationFormInput}
+            required
+            // onSubmit={this.handleRegistration}
           >
             {this.props.isRegistering ? (
               <Loader type="ThreeDots" color="#1f2a38" height="12" width="26" />
@@ -138,14 +163,3 @@ class Register extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    isRegisterring: state.isRegistering,
-    errors: state.errors
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { registerUser }
-)(Register);
