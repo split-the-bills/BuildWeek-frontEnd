@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Link } from "react-router-dom";
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
+import { withRouter } from 'react-router';
 import {
   Col,
   Row,
@@ -14,8 +15,10 @@ import {
 } from "reactstrap";
 import axios from "axios";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 // import "./styles.css";
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/js/bootstrap.js';
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -34,11 +37,11 @@ export default class Register extends React.Component {
   /////////////////////////////////////////
   componentDidMount() {
     axios
-      .get("http://localhost:9090/api/auth/register")
-      .then(response => {
-        console.log(response.data);
+      .get("https://arpita-sinha-split-the-bill.herokuapp.com/api/auth/register")
+      .then(res => {
+        console.log(res.data);
         this.setState({
-          registrationInfo: response.data
+          registrationInfo: res.data
         });
       })
       .catch(err => console.log(err));
@@ -59,7 +62,7 @@ export default class Register extends React.Component {
   handleRegisterBtn = event => {
     event.preventDefault();
     axios
-      .post("http://localhost:9090/api/auth/register", {
+      .post("https://arpita-sinha-split-the-bill.herokuapp.com/api/auth/register", {
         id: this.state.id,
         username: this.state.username,
         password: this.state.password,
@@ -153,7 +156,7 @@ export default class Register extends React.Component {
             // onSubmit={this.handleRegistration}
           >
             {this.props.isRegistering ? (
-              <Loader type="ThreeDots" color="#1f2a38" height="12" width="26" />
+              {/* <Loader type="ThreeDots" color="#1f2a38" height="12" width="26" /> */}
             ) : (
               "Register"
             )}
