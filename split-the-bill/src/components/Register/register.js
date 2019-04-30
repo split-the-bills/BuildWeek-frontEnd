@@ -24,7 +24,7 @@ export default class Register extends React.Component {
   constructor() {
     super();
     this.state = {      
-        id: "",
+        // id: "",
         username: "",
         password: "",
         phone: "",
