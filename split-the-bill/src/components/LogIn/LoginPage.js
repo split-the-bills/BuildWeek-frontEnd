@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./Login.css";
+import axios from "axios";
+import { BrowserRouter as Link } from "react-router-dom";
 
 class LoginPage extends Component {
   constructor() {
@@ -11,17 +13,37 @@ class LoginPage extends Component {
     };
   }
 
+  componentDidMount() {
+    axios
+      .get("http://localhost:9090/api/auth/login")
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          state: response.data
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
   onChange = e => {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = e => {
+  // onSubmit = e => {
+  //   e.preventDefault();
+  //   const user = {
+  //     username: this.state.username,
+  //     password: this.state.password
+  //   };
+  //   console.log(user);
+  // };
+
+  onSubmit = (e, user) => {
     e.preventDefault();
-    const user = {
-      username: this.state.username,
-      password: this.state.password
-    };
+    axios.post(`http://localhost:9090/api/auth/login`, user).then(res => {
+      this.setState({ state: res.data });
+    });
     console.log(user);
   };
 
@@ -58,7 +80,12 @@ class LoginPage extends Component {
                     required
                   />
                 </div>
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <Link to="/dashboard" className="home-route">
+                  <input
+                    type="submit"
+                    className="btn btn-info btn-block mt-4"
+                  />
+                </Link>
               </form>
             </div>
           </div>
@@ -69,3 +96,4 @@ class LoginPage extends Component {
 }
 
 export default LoginPage;
+

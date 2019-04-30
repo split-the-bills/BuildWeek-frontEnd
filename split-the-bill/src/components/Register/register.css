@@ -1,0 +1,11 @@
+.registration-form {
+    position: relative;
+    padding: 3em 1em 1em;
+    border: 1px solid #d8d8d8;
+    margin: 1.5rem 0 0;
+  }
+  
+  .register-btn {
+    background-color: #3bc094;
+    color: white;
+  }
