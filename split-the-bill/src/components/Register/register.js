@@ -21,17 +21,16 @@ import axios from "axios";
 // import 'bootstrap/dist/js/bootstrap.js';
 
 export default class Register extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      registrationInfo: {
+  constructor() {
+    super();
+    this.state = {      
         id: "",
         username: "",
         password: "",
         phone: "",
         email: "",
         // isRegistering: false
-      }
+      
     };
   }
   /////////////////////////////////////////
@@ -41,7 +40,7 @@ export default class Register extends React.Component {
       .then(res => {
         console.log(res.data);
         this.setState({
-          registrationInfo: res.data
+          state: res.data
         });
       })
       .catch(err => console.log(err));
@@ -52,12 +51,7 @@ export default class Register extends React.Component {
     this.setState({ [newUser]: event.target.value });
   };
 
-  // handleRegistration = e => {
-  //   e.preventDefault();
-  //   this.props
-  //     .login(this.state.registrationInfo)
-  //     .then(() => this.props.history.push("/protected"));
-  // };
+
 
   handleRegisterBtn = event => {
     event.preventDefault();
@@ -77,7 +71,7 @@ export default class Register extends React.Component {
     return (
       <Form
         className="registration-form"
-        registrationInfo={this.state.registrationInfo}
+        // registrationInfo={this.state.registrationInfo}
       >
         {/* <h1>Split the Bill</h1> */}
         <h3>Register Here</h3>
@@ -148,7 +142,7 @@ export default class Register extends React.Component {
             handleRegisterBtn={this.handleRegisterBtn}
             handleRegistrationFormInput={this.handleRegistrationFormInput}
             required
-            // onSubmit={this.handleRegistration}
+            onSubmit={this.handleRegistrationBtn}
           >
             {this.props.isRegistering ? (
               {/* <Loader type="ThreeDots" color="#1f2a38" height="12" width="26" /> */}
