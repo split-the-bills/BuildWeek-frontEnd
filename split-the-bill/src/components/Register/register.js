@@ -73,6 +73,7 @@ export default class Register extends React.Component {
       <Form
         className="registration-form"
         registrationInfo={this.state.registrationInfo}
+        onSubmit={this.handleRegistrationBtn}
       >
         {/* <h1>Split the Bill</h1> */}
         <h3>Register Here</h3>
