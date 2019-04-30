@@ -30,7 +30,7 @@ export default class Register extends React.Component {
         password: "",
         phone: "",
         email: "",
-        isRegistering: false
+        // isRegistering: false
       }
     };
   }
@@ -61,21 +61,16 @@ export default class Register extends React.Component {
 
   handleRegisterBtn = event => {
     event.preventDefault();
-    axios
-      .post("https://arpita-sinha-split-the-bill.herokuapp.com/api/auth/register", {
-        id: this.state.id,
-        username: this.state.username,
-        password: this.state.password,
-        phone: this.state.phone,
-        email: this.state.email
-        // isRegistering: true
-      })
-      .then(response => {
-        this.setState({ registrationInfo: response.data.registrationInfo });
+    axios.post("https://arpita-sinha-split-the-bill.herokuapp.com/api/auth/register", this.state)
+    .then (res =>{
+        console.log("POST Register RESPONSE",res)
+        console.log("POST RESPONSE",res.data)
+        localStorage.setItem('jwt',res.data.token)
+        this.props.history.push('/users')
       })
       .catch(err => {
         console.log(err);
-      });
+      })
   };
 
   render() {
