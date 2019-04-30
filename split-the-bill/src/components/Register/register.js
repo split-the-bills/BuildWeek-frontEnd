@@ -23,14 +23,15 @@ import axios from "axios";
 export default class Register extends React.Component {
   constructor() {
     super();
-    this.state = {      
-        // id: "",
+    this.state = {
+      registrationInfo: {
+        id: "",
         username: "",
         password: "",
         phone: "",
         email: "",
-        // isRegistering: false
-      
+        isRegistering: false
+      }
     };
   }
   /////////////////////////////////////////
@@ -40,7 +41,7 @@ export default class Register extends React.Component {
       .then(res => {
         console.log(res.data);
         this.setState({
-          state: res.data
+          registrationInfo: res.data
         });
       })
       .catch(err => console.log(err));
@@ -71,7 +72,7 @@ export default class Register extends React.Component {
     return (
       <Form
         className="registration-form"
-        // registrationInfo={this.state.registrationInfo}
+        registrationInfo={this.state.registrationInfo}
       >
         {/* <h1>Split the Bill</h1> */}
         <h3>Register Here</h3>
